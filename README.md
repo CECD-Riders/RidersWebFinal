@@ -1,5 +1,7 @@
 # RidersWebFinal
 
+- 컴퓨터공학 종합설계2_01 팀 Riders 프론트 프로젝트 입니다.
+
 RidersWebFinal은 RidersServerFinal에 종속되어 프론트를 담당하는 부분입니다.
 
 RidersServerFinal을 github를 통해 받으신 후 (https://github.com/CECD-Riders/RidersServerFinal)
