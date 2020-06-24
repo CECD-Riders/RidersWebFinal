@@ -4,6 +4,10 @@
 
 - RidersWebFinal은 RidersServerFinal에 종속되어 프론트를 담당하는 부분입니다.
 
+- 로컬에 데이터베이스가 설치되어 있어야 합니다.
+
+- 별도의 FTP & HTTP Server가 있어야 합니다.
+
 - 사용법
 
       RidersServerFinal을 github를 통해 받으신 후 (https://github.com/CECD-Riders/RidersServerFinal)
