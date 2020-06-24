@@ -24,3 +24,11 @@
 
 
 이렇게 오라클 디비와 FTP서버를 연동할 수 있습니다.
+
+----------------------------------------------------------------------------------------------------------
+
+* 유튜브 발표 영상(12분)        : https://www.youtube.com/watch?v=9Pih1ZR0ZSc
+
+* 유튜브 시연 영상(5분)         : https://www.youtube.com/watch?v=NG2PHW-as-s
+
+* 유튜브 발표+시연 영상(5분)    : https://www.youtube.com/watch?v=NG2PHW-as-s
