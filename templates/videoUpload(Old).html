@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>POTG</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" href="/CSS/upload.css">
+    <script src="/JS/jquery-3.4.1.min.js"></script>
+    <!--Load HTML Files-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#leftSidebar").load("leftSidebar.html");
+            $("#headers").load("headers.html");
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var fileTarget = $('.filebox .upload-hidden');
+            fileTarget.on('change', function () {
+                if (window.FileReader) {
+                    var filename = $(this)[0].files[0].name;
+                } else {
+                    var filename = $(this).val().split('/').pop().split('\\').pop();
+                }
+                $(this).siblings('.upload-name').val(filename);
+                $(this).siblings('.upload-name-hidden').val(filename);
+                // $("deleteData").css("display","block");
+            });
+        });
+    </script>
+
+    <script>
+        function checkValue(){
+            var uploadData = document.getElementById("ex_filename").value;
+            var videoName = document.getElementById("videoname").value;
+            if(uploadData == ""){
+                alert("업로드 할 동영상을 선택해 주세요");
+                return false;
+            }
+            if(videoName == ""){
+                alert("업로드 할 동영상 제목을 입력해 주세요.");
+                return false;
+            }
+            if(videoName != "" && uploadData != "") {
+                $("#msg").text("영상이 전송중입니다.....");
+                return true;
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div id="leftSidebar"></div>
+<div id="headers"></div>
+<div class="content">
+    <div class = "upload-header">
+        <h3>동영상 업로드</h3>
+    </div>
+    <div class="upload-container">
+        <form th:action="@{/admin/videoUpload}" method="post" enctype="multipart/form-data">
+            <div class="filebox bs3-primary">
+                <input type="text" class="upload-name" value="파일선택" disabled="disabled">
+                <input type="hidden" class="upload-name-hidden" name="path">
+                <label for="ex_filename">파일찾기</label>
+                <input type="file" id="ex_filename" class="upload-hidden">
+<!--                <a id = "deleteData">삭제</a>-->
+            </div>
+            <div class = "upload-videoname">
+                <label>*동영상 제목 입력 :</label><br>
+                <input id="videoname" name="HostfileName" type="text" autocomplete="off">
+            </div>
+            <button type="submit" class = "uploadbtn" onclick="return checkValue()">업로드</button>
+        </form>
+        <br><br>
+        <a th:text="${succesMsg}" id="msg"></a>
+
+    </div>
+</div>
+<!--<script src = "/JS/upload_checkValue.js"></script>-->
+</body>
+
+</html>

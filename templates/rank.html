@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>기록 / 순위</title>
+    <link rel="stylesheet" , href="/CSS/index.css" />
+    <link rel="stylesheet" href="/CSS/rank.css" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" />
+
+    <script src="/JS/jquery-3.4.1.min.js"></script>
+
+    <!--Load HTML Files-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#headers").load("headers.html");
+            $("#leftSidebar").load("leftSidebar.html");
+        });
+    </script>
+</head>
+
+<body>
+<div id="headers"></div>
+<div class="contents">
+    <div id="leftSidebar"></div>
+    <div class="main-contents-container">
+        <div class="main-contents">
+            <h3>기록 / 순위</h3>
+
+            <div class="rank-controller">
+                <div class="now-conference">
+                    <a th:if="${conference.equals('EAST')}">-동부 컨퍼런스</a>
+                    <a th:if="${conference.equals('WEST')}">-서부 컨퍼런스</a>
+                </div>
+
+                <div class="date-controller">
+                    <span th:if="${beforeYear!=0}">
+                            <a th:href="@{/rank(year=${beforeYear},conference=${conference})}">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                        </span>
+
+                    <h3 th:text="${currentYear-1} + '-' + ${currentYear}"></h3>
+
+                    <span th:if="${nextYear!=0}">
+                            <a th:href="@{/rank(year=${nextYear},conference=${conference})}">
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </span>
+                </div>
+
+                <div class="set-conference">
+                    <a class="set-east" th:href="@{/rank(year=${currentYear},conference=EAST)}">
+                        동부 컨퍼런스
+                    </a>
+
+                    <a class="set-west" th:href="@{/rank(year=${currentYear},conference=WEST)}">
+                        서부 컨퍼런스
+                    </a>
+                </div>
+            </div>
+
+            <div class="tbl_box">
+                <table cellspacing="0" cellpadding="0">
+                    <colgroup>
+                        <col width="80" />
+                        <col width="190" />
+                        <col width="60" />
+                        <col width="60" />
+                        <col width="45" />
+                        <col width="45" />
+                        <col width="60" />
+                        <col width="45" />
+                        <col width="45" />
+                        <col width="45" />
+                        <col width="60" />
+                        <col width="60" />
+                        <col width="80" />
+                        <col width="80" />
+                        <col width="60" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>
+                            <div class="rank">
+                                <strong><span class="blind">순위</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="team">
+                                <strong><span class="blind">팀</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dvs">
+                                <strong><span class="blind">디비전</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="gcnt">
+                                <strong><span class="blind">경기수</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="wpnt">
+                                <strong id="regularTeamRecordList_win"><span class="blind">승</span></strong>
+
+                            </div>
+                        </th>
+                        <th>
+                            <div class="lpnt">
+                                <strong id="regularTeamRecordList_lose"><span class="blind">패</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="wlpnt">
+                                <span class="blind">승차</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="homew">
+                                <span class="blind">홈승</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="homel">
+                                <span class="blind">홈패</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="ldw">
+                                <span class="blind">원정승</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="ldl">
+                                <strong id="regularTeamRecordList_awayLose"><span
+                                        class="blind">원정패</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dvsw">
+                                <strong id="regularTeamRecordList_divWin"><span
+                                        class="blind">디비전승</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="dvsl">
+                                <strong id="regularTeamRecordList_divLose"><span
+                                        class="blind">디비전패</span></strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="rly">
+                                <strong id="regularTeamRecordList_streak"><span class="blind">연속</span></strong>
+                            </div>
+                        </th>
+                    </tr>
+
+
+                    </thead>
+                    <tbody id="regularTeamRecordList_table">
+                    <div th:each="teamRank : ${teamRankList}">
+                        <tr>
+                            <th><strong th:text="${teamRankStat.count}"></strong></th>
+                            <td class="tm">
+                                <div>
+                                    <span th:text="${teamRank.name}"></span>
+                                </div>
+                            </td>
+                            <td><span th:text="${teamRank.division}">CEN</span></td>
+                            <td><span th:text="${teamRank.gameCount}">65</span></td>
+                            <td><span th:text="${teamRank.winCount}">53</span></td>
+                            <td><span th:text="${teamRank.loseCount}">12</span></td>
+                            <td><strong th:text="${teamRank.ride}">0.815</strong></td>
+                            <td><span th:text="${teamRank.homeWinCount}">0.0</span></td>
+                            <td><span th:text="${teamRank.homeLoseCount}">28</span></td>
+                            <td><span th:text="${teamRank.expeditionWinCount}">3</span></td>
+                            <td><span th:text="${teamRank.expeditionLoseCount}">25</span></td>
+                            <td><span th:text="${teamRank.divisionWinCount}">9</span></td>
+                            <td><span th:text="${teamRank.divisionLoseCount}">13</span></td>
+                            <td><span th:text="${teamRank.winningStreak}">1</span></td>
+                        </tr>
+                    </div>
+
+                    </tbody>
+                </table>
+
+                <div class="h_ln"></div>
+                <div class="wnrt_on" id="regularTeamRecordList_ColumnChecker">
+                    <span class="bl" style="height:512px"></span>
+                    <span class="bt"></span>
+                    <span class="br" style="height:512px"></span>
+                    <span class="bb" style="top:511px"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

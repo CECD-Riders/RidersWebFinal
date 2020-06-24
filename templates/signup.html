@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/CSS/login.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <script src="/JS/jquery-3.4.1.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            <!--아이디 공백+중복확인 ajax 스크립트 -->
+            $("#inputId").blur(function(){
+                var memberId = $('#inputId').val();
+                if(memberId == ""){
+                    $("#inputId_check").text("필수 정보입니다.");
+                    $("#inputId_check").css("color","red");
+                }
+                else{
+                    $.ajax({
+                        url:'/member/idCheck?memberId='+memberId,
+                        type: 'get',
+                        success : function (data) {
+                            if(data == 1){
+                                $("#inputId_check").text("이미 사용중인 아이디 입니다.");
+                                $("#inputId_check").css("color","red");
+                            }
+                            else{
+                                $("#inputId_check").text("사용가능한 아이디 입니다.");
+                                $("#inputId_check").css("color","green");
+                            }
+                        }
+                    })
+                }
+            });
+
+            <!--비밀번호 공백확인 + 일치여부 확인 스크립트 -->
+            $("#inputPw1").blur(function(){
+                var inputPw1 = $('#inputPw1').val();
+                var inputPw2 = $('#inputPw2').val();
+                if(inputPw1 == ""){
+                    $("#inputPw1_check").text("필수 정보입니다.");
+                    $("#inputPw1_check").css("color","red");
+                    $("#inputPw2_check").text("");
+                }else{
+                    if(inputPw2 == "") {
+                        $("#inputPw1_check").text("");
+                    }
+                    else{
+                        if (inputPw1 != inputPw2) {
+                            $("#inputPw2_check").text("비밀번호가 일치하지 않습니다.");
+                            $("#inputPw2_check").css("color", "red");
+                        } else {
+                            $("#inputPw1_check").text("");
+                            $("#inputPw2_check").text("비밀번호가 일치합니다.");
+                            $("#inputPw2_check").css("color", "green");
+                        }
+                    }
+                }
+            });
+
+            $("#inputPw2").blur(function(){
+                var inputPw1 = $('#inputPw1').val();
+                var inputPw2 = $('#inputPw2').val();
+                if(inputPw2 == ""){
+                    $("#inputPw2_check").text("필수 정보입니다.");
+                    $("#inputPw2_check").css("color","red");
+                }else{
+                    if(inputPw1 != inputPw2) {
+                        $("#inputPw2_check").text("비밀번호가 일치하지 않습니다.");
+                        $("#inputPw2_check").css("color","red");
+                    }else{
+                        $("#inputPw2_check").text("비밀번호가 일치합니다.");
+                        $("#inputPw2_check").css("color","green");
+                    }
+                }
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <div class="form-box">
+        <h1><a href = "/">POTG</a></h1>
+        <div class="login-page">
+            <form class="register-form" name="fr" th:action="@{/member/signup}" method="post">
+                <div class="input-box2">
+                    <i class="far fa-envelope"></i>
+                    <input id="inputId" type="text" name="email" placeholder="아이디 입력" autocomplete = 'none'>
+                    <div class="check-font" id="inputId_check"></div>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-key"></i>
+                    <input id="inputPw1" type="password" name="password" placeholder="비밀번호 입력" >
+                    <div class="check-font" id="inputPw1_check"></div>
+                </div>
+                <div class="input-box">
+                    <i class="fas fa-check"></i>
+                    <input id="inputPw2" type="password" name="passwordCheck" placeholder="비밀번호 확인">
+                    <div class="check-font" id="inputPw2_check"></div>
+                </div>
+                <button class=login-btn id="joinSubmit"  onclick="return checkValue()">회원가입</button>
+                <p class="message"><a href="/member/login">로그인</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="/JS/signup_checkValue.js"></script>
+</body>
+
+</html>

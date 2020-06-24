@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>경기 일정/결과</title>
+
+  <link rel="stylesheet" href="/CSS/calendar.css" />
+  <link rel="stylesheet" href="/CSS/calendarpage.css" />
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" />
+
+  <script src="/JS/jquery-3.4.1.min.js"></script>
+
+  <!--Load HTML Files-->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#headers").load("headers.html");
+      $("#leftSidebar").load("leftSidebar.html");
+    });
+  </script>
+  <script>
+
+  </script>
+</head>
+
+<body>
+  <div id="leftSidebar"></div>
+  <div id="headers"></div>
+
+  <div class="contents">
+
+    <div class="main-contents-container">
+      <div class="main-contents">
+        <!-- ------------------Calendar-------------------------------- -->
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h3>경기 일정/결과</h3>
+          </div>
+
+          <div class="date-controller-container">
+            <div class="date-controller">
+              <!--        (<-)       -->
+              <a th:href="@{/gameList(year=${beforeYear}, month=${beforeMonth})}">
+                <i class="fas fa-arrow-left"></i>
+              </a>
+              
+              <!--        (now date state) -->
+              <h3 th:text="${currentYear} + '-' + ${currentMonth}"></h3>
+
+              <!--        (->)       -->
+              <span th:if="${nextYear!=0}">
+                <a th:href="@{/gameList(year=${nextYear}, month=${nextMonth})}">
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </span>
+
+            </div>
+          </div>
+
+
+
+          <div class="content-today_calendar">
+            <!--Naver sport_nba crawling-->
+            <div class="sch_volleyball tb_nba">
+              <div class="sch_tb ">
+                <table cellspacing="0" border="1">
+                  <colgroup>
+                    <col width="100" />
+                    <col width="55" />
+                    <col width="430" />
+                    <col width="166" />
+                    <col width="280" />
+                  </colgroup>
+                  <tbody>
+                    <thead>
+                      <tr>
+                        <th>
+                          날짜
+                        </th>
+                        <th>
+                          시간
+                        </th>
+                        <th>
+                          경기
+                        </th>
+                        <th>
+                          영상
+                        </th>
+                        <th></th>
+                      </tr>
+                    </thead>
+
+                  <div th:each="dayGame : ${GameList}">
+                    <tr>
+                      <td th:rowspan="${dayGame.getGameList().size()+1}"><span class="td_date" th:text="${dayGame.date}"></span></td>
+                    </tr>
+                    <div th:each="game : ${dayGame.gameList}">
+                      <tr>
+                        <td><span class="td_hour" th:text="${game.time}"></span></td>
+                        <td>
+                          <span class="team_lft" th:text="${game.leftTeam}"></span>
+                          <strong class="td_score" th:text="${game.score}"></strong>
+                          <span class="team_rgt" th:text="${game.rightTeam}"></span>
+                        </td>
+                        <td>
+                        <span class="td_btn">
+                          <a th:href="@{/member/watch(year=${currentYear} ,date=${dayGame.date}, leftTeam=${game.leftTeam}, rightTeam=${game.rightTeam})}">
+                            <img width="61" height="23" alt="경기영상" src="https://imgsports.pstatic.net/images/section/volleyball/css/btn_vod_off.gif">
+                          </a>
+                        </span>
+                        </td>
+                        <td>
+                          <span class="td_stadium" th:text="${game.stadium}"></span>
+                        </td>
+                      </tr>
+                    </div>
+
+                  </div>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--END Naver sport_nba crawling-->
+          </div>
+        </div>
+        <!-- ------------------/Calendar-------------------------------- -->
+
+
+      </div>
+    </div>
+</body>
+
+</html>
