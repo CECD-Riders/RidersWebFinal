@@ -14,7 +14,7 @@
 
 다음은 application.properties의 예시입니다.
 
-![image](https://user-images.githubusercontent.com/41561652/85493847-98f3c300-b612-11ea-9fa4-6a42e0505e95.png)
+![image](https://user-images.githubusercontent.com/41561652/85497993-db6cce00-b619-11ea-9bed-5486a5607d53.png)
 
 
 이렇게 오라클 디비와 FTP서버를 연동할 수 있습니다.
