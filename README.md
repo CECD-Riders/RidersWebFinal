@@ -1,6 +1,3 @@
-"# myRidersWeb" 
-
-
 해당 프로젝트는 Riders Server에 종속되어 프론트를 담당하는 부분입니다.
 
 RidersServerFinal을 github를 통해 받으신 후 해당 프로젝트의 
